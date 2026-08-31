@@ -12,10 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Contexts\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Seeds\" />
-    <Folder Include="_Common\" />
+    <Folder Include="Data\Interceptors\" />
   </ItemGroup>
 
   <ItemGroup>
