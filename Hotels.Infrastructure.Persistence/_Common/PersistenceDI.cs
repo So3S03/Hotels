@@ -1,5 +1,7 @@
-﻿using Hotels.Domain.Entities.Identity;
+﻿using Hotels.Domain.Contracts;
+using Hotels.Domain.Entities.Identity;
 using Hotels.Infrastructure.Persistence.Data.Contexts;
+using Hotels.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +29,7 @@ namespace Hotels.Infrastructure.Persistence._Common
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            service.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
             return service;
         }
     }

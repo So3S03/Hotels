@@ -12,7 +12,7 @@ namespace Hotels.Infrastructure.Persistence.Data.Configs.RoomConfigs
             base.Configure(builder);
             builder.HasIndex(R => R.RoomNumber).IsUnique();
             builder.Property(R => R.RoomNumber).IsRequired();
-            builder.Property(R => R.PricePerNight).HasColumnType("decimel(18, 3)").IsRequired();
+            builder.Property(R => R.PricePerNight).HasColumnType("decimal(18, 3)").IsRequired();
             builder.Property(R => R.IsAvailable).IsRequired();
             builder.Property(R => R.RoomType)
                 .HasConversion(

@@ -77,7 +77,7 @@ namespace Hotels.Infrastructure.Persistence.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoomNumber = table.Column<int>(type: "int", nullable: false),
                     RoomType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PricePerNight = table.Column<decimal>(type: "decimel(18, 3)", nullable: false),
+                    PricePerNight = table.Column<decimal>(type: "decimal(18, 3)", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

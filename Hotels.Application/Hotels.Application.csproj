@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.30" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Hotels.Application.Abstraction\Hotels.Application.Abstraction.csproj" />
     <ProjectReference Include="..\Hotels.Domain\Hotels.Domain.csproj" />
   </ItemGroup>
