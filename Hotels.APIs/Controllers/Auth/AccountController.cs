@@ -1,4 +1,5 @@
 ﻿using Hotels.APIs.Controllers.Base;
+using Hotels.Application.AuthModule.ActivationFeature.Command;
 using Hotels.Application.AuthModule.LoginFeature.Command;
 using Hotels.Application.AuthModule.RegisterFeature.Command;
 using Hotels.Shared.Dtos._Common;
@@ -21,6 +22,13 @@ namespace Hotels.APIs.Controllers.Auth
         public async Task<ActionResult<ActionStatusDto>> Register(RegisterCommand registerCommand)
         {
             var result = await _mediator.Send(registerCommand);
+            return Ok(result);
+        }
+
+        [HttpPut("ActivateDeactivateUser")]
+        public async Task<ActionResult<ActionStatusDto>> ActivateDeactivateUser(ActivationCommand activationCommand)
+        {
+            var result = await _mediator.Send(activationCommand);
             return Ok(result);
         }
     }
