@@ -7,6 +7,7 @@ using Hotels.Shared.Dtos._Common;
 using Hotels.Shared.Dtos.AuthModule;
 using Hotels.Shared.Dtos.AuthModule._Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotels.APIs.Controllers.Auth
@@ -27,6 +28,7 @@ namespace Hotels.APIs.Controllers.Auth
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPut("ActivateDeactivateUser")]
         public async Task<ActionResult<ActionStatusDto>> ActivateDeactivateUser(ActivationCommand activationCommand)
         {
@@ -34,6 +36,7 @@ namespace Hotels.APIs.Controllers.Auth
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("GetAllUsers")]
         public async Task<ActionResult<GridsToReturnDto<UserToReturnDto>>> GetAllUsers([FromQuery] UsersQuery usersQuery)
         {
