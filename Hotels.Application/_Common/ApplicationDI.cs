@@ -1,4 +1,6 @@
 ﻿using Hotels.Application.Abstraction._Common.Contracts;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -69,6 +71,10 @@ namespace Hotels.Application._Common
                     }
                 };
             });
+            var globalSettings = TypeAdapterConfig.GlobalSettings;
+            globalSettings.Scan(typeof(ApplicationAssembly).Assembly);
+            service.AddSingleton(globalSettings);
+            service.AddScoped<IMapper, ServiceMapper>();
             return service;
         }
     }

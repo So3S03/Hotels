@@ -2,7 +2,9 @@
 using Hotels.Application.AuthModule.ActivationFeature.Command;
 using Hotels.Application.AuthModule.LoginFeature.Command;
 using Hotels.Application.AuthModule.RegisterFeature.Command;
+using Hotels.Application.AuthModule.UsersGridFeature.Query;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.AuthModule;
 using Hotels.Shared.Dtos.AuthModule._Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,13 @@ namespace Hotels.APIs.Controllers.Auth
         public async Task<ActionResult<ActionStatusDto>> ActivateDeactivateUser(ActivationCommand activationCommand)
         {
             var result = await _mediator.Send(activationCommand);
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult<GridsToReturnDto<UserToReturnDto>>> GetAllUsers([FromQuery] UsersQuery usersQuery)
+        {
+            var result = await _mediator.Send(usersQuery);
             return Ok(result);
         }
     }
