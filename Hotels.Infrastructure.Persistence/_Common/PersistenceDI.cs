@@ -14,6 +14,7 @@ namespace Hotels.Infrastructure.Persistence._Common
     {
         public static IServiceCollection AddPersisitence(this IServiceCollection service, IConfiguration configuration)
         {
+            service.AddScoped<AuditLogsInterceptor>();
             var connectionString = configuration.GetConnectionString("DefaultDatabase");
             service.AddDbContext<ApplicationDbContext>((serviceProvider ,options) =>
             {

@@ -17,9 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hotels.Application.Abstraction\Hotels.Application.Abstraction.csproj" />
     <ProjectReference Include="..\Hotels.Application\Hotels.Application.csproj" />
-    <ProjectReference Include="..\Hotels.Controllers\Hotels.Controllers.csproj" />
     <ProjectReference Include="..\Hotels.Infrastructure.Persistence\Hotels.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\Hotels.Infrastructure\Hotels.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

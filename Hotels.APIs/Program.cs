@@ -1,7 +1,7 @@
 
 using Hotels.APIs.Extensions;
 using Hotels.APIs.Middlewares;
-using Hotels.Controllers._Common;
+using Hotels.Application._Common;
 using Hotels.Infrastructure.Persistence._Common;
 using Hotels.Infrastructure.Persistence.Data.Contexts;
 
@@ -14,10 +14,10 @@ namespace Hotels.APIs
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
 
-            builder.Services.AddControllers()
-                .AddApplicationPart(typeof(ControllersAssembly).Assembly);
+            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddPersisitence(builder.Configuration);
+            builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -32,6 +32,7 @@ namespace Hotels.APIs
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();

@@ -2,7 +2,6 @@
   <Folder Name="/src/" />
   <Folder Name="/src/APIs/">
     <Project Path="Hotels.APIs/Hotels.APIs.csproj" />
-    <Project Path="Hotels.Controllers/Hotels.Controllers.csproj" />
   </Folder>
   <Folder Name="/src/Core/">
     <Project Path="Hotels.Application.Abstraction/Hotels.Application.Abstraction.csproj" />
@@ -11,7 +10,6 @@
   </Folder>
   <Folder Name="/src/Infrastrcture/">
     <Project Path="Hotels.Infrastructure.Persistence/Hotels.Infrastructure.Persistence.csproj" />
-    <Project Path="Hotels.Infrastructure/Hotels.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Shared/">
     <Project Path="Hotels.Shared/Hotels.Shared.csproj" />
