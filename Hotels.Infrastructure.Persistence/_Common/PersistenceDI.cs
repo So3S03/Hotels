@@ -1,6 +1,7 @@
 ﻿using Hotels.Domain.Contracts;
 using Hotels.Domain.Entities.Identity;
 using Hotels.Infrastructure.Persistence.Data.Contexts;
+using Hotels.Infrastructure.Persistence.Data.Interceptors;
 using Hotels.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,9 @@ namespace Hotels.Infrastructure.Persistence._Common
             var connectionString = configuration.GetConnectionString("DefaultDatabase");
             service.AddDbContext<ApplicationDbContext>((serviceProvider ,options) =>
             {
+                var interceptor = serviceProvider.GetRequiredService<AuditLogsInterceptor>();
                 options.UseSqlServer(connectionString);
+                options.AddInterceptors(interceptor);
             })
                 .AddIdentityCore<AppUser>(identityOptions =>
                 {
@@ -30,6 +33,7 @@ namespace Hotels.Infrastructure.Persistence._Common
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             service.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
+            service.AddHttpContextAccessor();
             return service;
         }
     }

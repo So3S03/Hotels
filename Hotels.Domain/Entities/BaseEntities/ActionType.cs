@@ -7,5 +7,6 @@ namespace Hotels.Domain.Entities.BaseEntities
         Created = 1,
         Updated = 2,
         Deleted = 3,
+        Canceled = 4
     }
 }
