@@ -7,9 +7,8 @@ namespace Hotels.Domain.Contracts
         where TKey : IEquatable<TKey>
     {
         IQueryable<TEntity> GetQuery();
-        Task<ICollection<TEntity>> GetAllWithNoTrackingAsync();
-        Task<ICollection<TEntity>> GetAllWithTrackingAsync();
-        Task<TEntity?> GetAsync(TKey primaryKey);
+        Task<ICollection<TEntity>> GetAllAsync(bool asNoTracking = false);
+        Task<TEntity?> GetAsync(TKey primaryKey, bool asNoTracking = false);
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(ICollection<TEntity> entities);
         void Update(TEntity entity);

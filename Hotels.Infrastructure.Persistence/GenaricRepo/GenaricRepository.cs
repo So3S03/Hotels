@@ -17,11 +17,16 @@ namespace Hotels.Infrastructure.Persistence.GenaricRepo
 
         public void DeleteRange(ICollection<TEntity> entities) => _dbContext.Set<TEntity>().RemoveRange(entities);
 
-        public async Task<ICollection<TEntity>> GetAllWithNoTrackingAsync() => await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
-
-        public async Task<ICollection<TEntity>> GetAllWithTrackingAsync() => await _dbContext.Set<TEntity>().ToListAsync();
-
-        public async Task<TEntity?> GetAsync(TKey primaryKey) => await _dbContext.Set<TEntity>().Where(e => e.Id.Equals(primaryKey)).FirstOrDefaultAsync();
+        public async Task<ICollection<TEntity>> GetAllAsync(bool asNoTracking = false)
+        {
+            if(asNoTracking) return await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+            return await _dbContext.Set<TEntity>().ToListAsync();
+        }
+        public async Task<TEntity?> GetAsync(TKey primaryKey, bool asNoTracking = false)
+        {
+            if(asNoTracking) return await _dbContext.Set<TEntity>().AsNoTracking().Where(e => e.Id.Equals(primaryKey)).FirstOrDefaultAsync();
+            return await _dbContext.Set<TEntity>().Where(e => e.Id.Equals(primaryKey)).FirstOrDefaultAsync();
+        }
 
         public IQueryable<TEntity> GetQuery() => _dbContext.Set<TEntity>();
 
