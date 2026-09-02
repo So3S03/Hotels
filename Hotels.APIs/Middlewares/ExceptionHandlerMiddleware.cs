@@ -41,6 +41,7 @@ namespace Hotels.APIs.Middlewares
                     Instance = context.Request.Path
                 };
                 logger.LogError(ex, ex.Message, problem);
+                context.Response.StatusCode = statusCode;
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsJsonAsync(problem);
 			}

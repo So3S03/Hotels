@@ -1,5 +1,6 @@
 ﻿using Hotels.APIs.Controllers.Base;
 using Hotels.Application.RoomModule.CreateFeature.Command;
+using Hotels.Application.RoomModule.DeleteFeature.Command;
 using Hotels.Application.RoomModule.UpdateFeature.Command;
 using Hotels.Shared.Dtos._Common;
 using MediatR;
@@ -20,6 +21,13 @@ namespace Hotels.APIs.Controllers.Room
 
         [HttpPut("UpdateRoom")]
         public async Task<ActionResult<ActionStatusDto>> UpdateRoom(UpdateRoomCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("DeleteRoom")]
+        public async Task<ActionResult<ActionStatusDto>> DeleteRoom([FromQuery]DeleteRoomCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
