@@ -5,9 +5,12 @@ namespace Hotels.Application.Specifications.RoomSpecs
 {
     public class RoomByIdSpec : BaseSpecification<Room>
     {
-        public RoomByIdSpec(string id): base(r => r.Id == id)
+        public RoomByIdSpec(string id, bool isLoadRelation = false): base(r => r.Id == id)
         {
-            
+            if(isLoadRelation)
+            {
+                addIncludes(r => r.Reservations);
+            }
         }
     }
 }

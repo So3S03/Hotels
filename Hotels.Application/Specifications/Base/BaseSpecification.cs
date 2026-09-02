@@ -6,6 +6,7 @@ namespace Hotels.Application.Specifications.Base
     public class BaseSpecification<TEntity> : ISpecification<TEntity>
     {
         public Expression<Func<TEntity, bool>>? Critria { get; private set; }
+        public ICollection<Expression<Func<TEntity, object>>> Includes { get; } = [];
 
         public int Skip { get; private set; }
 
@@ -23,6 +24,10 @@ namespace Hotels.Application.Specifications.Base
             Critria = criteria;
         }
 
+        protected void addIncludes(Expression<Func<TEntity, object>> include)
+        {
+            Includes.Add(include);
+        }
         protected void Pagination(int pageNum, int pageSize)
         {
             isPagination = true;
