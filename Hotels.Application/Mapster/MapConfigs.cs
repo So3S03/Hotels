@@ -5,6 +5,7 @@ using Hotels.Domain.Entities.Identity;
 using Hotels.Domain.Entities.Reservations;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos.AuthModule;
+using Hotels.Shared.Dtos.ReservationModule;
 using Hotels.Shared.Dtos.RoomModule;
 using Mapster;
 
@@ -30,6 +31,12 @@ namespace Hotels.Application.Mapster
             //Reservation Modul
             config.NewConfig<CreateReservationCommand, Reservation>()
                 .Map(dest => dest.Status, src => ReservationStatus.Confirmed);
+
+            config.NewConfig<Reservation, ReservationToReturnDto>()
+                .Map(dest => dest.StatusName, src => src.Status.ToString())
+                .Map(dest => dest.StatusId, src => src.Status)
+                .Map(dest => dest.RoomNumber, src => src.Room.RoomNumber);
+            
 
         }
     }

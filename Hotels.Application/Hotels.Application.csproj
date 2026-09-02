@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ReservationModule\GetReservationFeature\" />
     <Folder Include="ReservationModule\GetAllReservationsFeature\" />
   </ItemGroup>
 
