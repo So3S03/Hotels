@@ -1,4 +1,5 @@
-﻿using Hotels.Application.RoomModule.CreateFeature.Command;
+﻿using Hotels.Application.ReservationModule.CreateReservationFeature.Command;
+using Hotels.Application.RoomModule.CreateFeature.Command;
 using Hotels.Application.RoomModule.UpdateFeature.Command;
 using Hotels.Domain.Entities.Identity;
 using Hotels.Domain.Entities.Reservations;
@@ -25,6 +26,11 @@ namespace Hotels.Application.Mapster
             config.NewConfig<Reservation, RoomReservationDto>()
                 .Map(dest => dest.StatusId, src => src.Status)
                 .Map(dest => dest.StatusName, src => src.Status.ToString());
+
+            //Reservation Modul
+            config.NewConfig<CreateReservationCommand, Reservation>()
+                .Map(dest => dest.Status, src => ReservationStatus.Confirmed);
+
         }
     }
 }
