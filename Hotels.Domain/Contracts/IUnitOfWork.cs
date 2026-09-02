@@ -11,6 +11,6 @@ namespace Hotels.Domain.Contracts
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task CommitAsync();
         Task RollbackAsync();
-        Task CompleteAsync();
+        Task<int> CompleteAsync();
     }
 }

@@ -32,7 +32,7 @@ namespace Hotels.Infrastructure.Persistence.UnitOfWork
                 _transaction = null;
             }
         }
-        public async Task CompleteAsync() => await context.SaveChangesAsync();
+        public async Task<int> CompleteAsync() => await context.SaveChangesAsync();
         public async ValueTask DisposeAsync()
         {
             if (_transaction is not null) await _transaction.DisposeAsync();
