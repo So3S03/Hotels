@@ -11,7 +11,7 @@ namespace Hotels.Application.Specifications.RoomSpecs
                 L => L.EntityId == query.RoomId && L.EntityName == typeof(Room).Name
             )
         {
-            if((query.PageNum > 0 || query.PageSize > 0) && isPagination) Pagination(query.PageNum > 0 ? query.PageNum : 1, query.PageSize > 0 ? query.PageSize : 1)
+            if ((query.PageNum > 0 || query.PageSize > 0) && isPagination) Pagination(query.PageNum > 0 ? query.PageNum : 1, query.PageSize > 0 ? query.PageSize : 1);
         }
     }
 }
