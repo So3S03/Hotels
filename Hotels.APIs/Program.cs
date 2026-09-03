@@ -2,6 +2,7 @@
 using Hotels.APIs.Extensions;
 using Hotels.APIs.Middlewares;
 using Hotels.Application._Common;
+using Hotels.Application.Hubs;
 using Hotels.Infrastructure.Persistence._Common;
 using Hotels.Infrastructure.Persistence.Data.Contexts;
 
@@ -34,7 +35,7 @@ namespace Hotels.APIs
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.MapHub<NotificationHub>("/hub/notifications");
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.MapControllers();
 

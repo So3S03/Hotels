@@ -27,6 +27,10 @@ namespace Hotels.Application.Mapster
             config.NewConfig<Room, RoomToReturnDto>()
                 .Map(dest => dest.RoomTypeId, src => src.RoomType)
                 .Map(dest => dest.RoomTypeName, src => src.RoomType.ToString());
+            config.NewConfig<CreateRoomCommand, CreateRoomDto>()
+                .Map(dest => dest.RoomType, src => ((RoomType)src.RoomType).ToString());
+            config.NewConfig<UpdateRoomCommand, ModifyRoomDto>()
+                .Map(dest => dest.RoomType, src => ((RoomType)src.RoomType).ToString());
             config.NewConfig<Reservation, RoomReservationDto>()
                 .Map(dest => dest.StatusId, src => src.Status)
                 .Map(dest => dest.StatusName, src => src.Status.ToString());
@@ -34,6 +38,8 @@ namespace Hotels.Application.Mapster
             //Reservation Modul
             config.NewConfig<CreateReservationCommand, Reservation>()
                 .Map(dest => dest.Status, src => ReservationStatus.Confirmed);
+            config.NewConfig<CreateReservationCommand, CreateReservationDto>()
+                .Map(dest => dest.Status, src => ReservationStatus.Confirmed.ToString());
 
             config.NewConfig<Reservation, ReservationToReturnDto>()
                 .Map(dest => dest.StatusName, src => src.Status.ToString())

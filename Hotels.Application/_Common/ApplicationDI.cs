@@ -75,6 +75,7 @@ namespace Hotels.Application._Common
             globalSettings.Scan(typeof(ApplicationAssembly).Assembly);
             service.AddSingleton(globalSettings);
             service.AddScoped<IMapper, ServiceMapper>();
+            service.AddSignalR();
             return service;
         }
     }
