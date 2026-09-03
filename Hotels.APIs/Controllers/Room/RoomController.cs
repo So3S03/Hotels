@@ -3,8 +3,10 @@ using Hotels.Application.RoomModule.CreateFeature.Command;
 using Hotels.Application.RoomModule.DeleteFeature.Command;
 using Hotels.Application.RoomModule.GetAllRoomsFeature.Query;
 using Hotels.Application.RoomModule.GetRoomFeature.Query;
+using Hotels.Application.RoomModule.GetRoomLogFeature.GetRoomLogQuery;
 using Hotels.Application.RoomModule.UpdateFeature.Command;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.LogsModule;
 using Hotels.Shared.Dtos.RoomModule;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +47,13 @@ namespace Hotels.APIs.Controllers.Room
 
         [HttpGet("GetAllRooms")]
         public async Task<ActionResult<GridsToReturnDto<RoomToReturnDto>>> GetAllRooms([FromQuery]GetAllRoomsQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("GetRoomsLog")]
+        public async Task<ActionResult<GridsToReturnDto<LogToReturnDto>>> GetRoomsLog([FromQuery]GetRoomLogQuery query)
         {
             var result = await _mediator.Send(query);
             return Ok(result);

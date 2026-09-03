@@ -1,10 +1,12 @@
 ﻿using Hotels.Application.ReservationModule.CreateReservationFeature.Command;
 using Hotels.Application.RoomModule.CreateFeature.Command;
 using Hotels.Application.RoomModule.UpdateFeature.Command;
+using Hotels.Domain.Entities.BaseEntities;
 using Hotels.Domain.Entities.Identity;
 using Hotels.Domain.Entities.Reservations;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos.AuthModule;
+using Hotels.Shared.Dtos.LogsModule;
 using Hotels.Shared.Dtos.ReservationModule;
 using Hotels.Shared.Dtos.RoomModule;
 using Mapster;
@@ -36,7 +38,11 @@ namespace Hotels.Application.Mapster
                 .Map(dest => dest.StatusName, src => src.Status.ToString())
                 .Map(dest => dest.StatusId, src => src.Status)
                 .Map(dest => dest.RoomNumber, src => src.Room.RoomNumber);
-            
+
+            //AuditLogModule
+            config.NewConfig<AuditLog, LogToReturnDto>()
+                .Map(dest => dest.ActionTypeName, src => src.ActionType.ToString())
+                .Map(dest => dest.ActionTypeId, src => src.ActionType);
 
         }
     }

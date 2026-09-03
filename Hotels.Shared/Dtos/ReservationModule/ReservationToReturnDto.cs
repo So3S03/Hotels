@@ -2,6 +2,7 @@
 {
     public class ReservationToReturnDto
     {
+        public string Id { get; set; }
         public required string GuestName { get; set; }
         public DateOnly CheckInDate { get; set; }
         public DateOnly CheckOutDate { get; set; }
