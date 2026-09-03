@@ -7,6 +7,8 @@ namespace Hotels.Application.Specifications.Base
     {
         public Expression<Func<TEntity, bool>>? Critria { get; private set; }
         public ICollection<Expression<Func<TEntity, object>>> Includes { get; } = [];
+        public Expression<Func<TEntity, object>>? OrderByAsc { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; private set; }
 
         public int Skip { get; private set; }
 
@@ -27,6 +29,11 @@ namespace Hotels.Application.Specifications.Base
         protected void addIncludes(Expression<Func<TEntity, object>> include)
         {
             Includes.Add(include);
+        }
+        protected void setOrderBy(Expression<Func<TEntity, object>>? orderByExper, bool isAsc)
+        {
+            if (isAsc) OrderByAsc = orderByExper;
+            else OrderByDesc = orderByExper;
         }
         protected void Pagination(int pageNum, int pageSize)
         {

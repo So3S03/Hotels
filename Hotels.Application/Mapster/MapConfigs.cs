@@ -7,6 +7,7 @@ using Hotels.Domain.Entities.Reservations;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos.AuthModule;
 using Hotels.Shared.Dtos.LogsModule;
+using Hotels.Shared.Dtos.ReportModule;
 using Hotels.Shared.Dtos.ReservationModule;
 using Hotels.Shared.Dtos.RoomModule;
 using Mapster;
@@ -43,6 +44,12 @@ namespace Hotels.Application.Mapster
             config.NewConfig<AuditLog, LogToReturnDto>()
                 .Map(dest => dest.ActionTypeName, src => src.ActionType.ToString())
                 .Map(dest => dest.ActionTypeId, src => src.ActionType);
+
+            //Reports Module
+            config.NewConfig<Room, TopNonCancelledRoomToReturnDto>()
+                .Map(dest => dest.RoomType, src => src.RoomType.ToString())
+                .Map(dest => dest.ReservationCount, src => src.Reservations.Count)
+                .Map(dest => dest.TotalRevenue, src => src.Reservations.Sum(r => r.TotalAmount));
 
         }
     }

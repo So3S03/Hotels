@@ -18,10 +18,19 @@ namespace Hotels.Domain.SpecificationPattern
                 {
                     startPoit = specification.Includes.Aggregate(startPoit, (currentQuery, include) => currentQuery.Include(include));
                 }
+                if(specification.OrderByAsc is not null && specification.OrderByDesc is null)
+                {
+                    startPoit = startPoit.OrderBy(specification.OrderByAsc);
+                }
+                else if(specification.OrderByAsc is null && specification.OrderByDesc is not null)
+                {
+                    startPoit = startPoit.OrderByDescending(specification.OrderByDesc);
+                }
                 if(specification.isPagination)
                 {
                     startPoit = startPoit.Skip(specification.Skip).Take(specification.Take);
                 }
+
             }
             return startPoit;
         }
