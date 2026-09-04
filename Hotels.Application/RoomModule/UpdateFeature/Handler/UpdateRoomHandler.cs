@@ -1,15 +1,17 @@
-﻿using Hotels.Application.RoomModule.UpdateFeature.Command;
+﻿using Hotels.Application.Abstraction.ServicesContracts;
+using Hotels.Application.RoomModule.UpdateFeature.Command;
 using Hotels.Application.Specifications.RoomSpecs;
 using Hotels.Domain.Contracts;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.RoomModule;
 using Hotels.Shared.Errors;
 using MapsterMapper;
 using MediatR;
 
 namespace Hotels.Application.RoomModule.UpdateFeature.Handler
 {
-    public class UpdateRoomHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<UpdateRoomCommand, ActionStatusDto>
+    public class UpdateRoomHandler(IUnitOfWork _unitOfWork, IMapper _mapper, IRoomNotificationService _notifire) : IRequestHandler<UpdateRoomCommand, ActionStatusDto>
     {
         public async Task<ActionStatusDto> Handle(UpdateRoomCommand request, CancellationToken cancellationToken)
         {
@@ -30,6 +32,8 @@ namespace Hotels.Application.RoomModule.UpdateFeature.Handler
             roomRepo.Update(mappedRoom);
             var result = await _unitOfWork.CompleteAsync() > 0;
             if(!result) throw new Exception("Something Went Wrong");
+            var mappedNot = _mapper.Map<ModifyRoomDto>(request);
+            await _notifire.NotifyRoomModification(mappedNot, request.ConnectionId);
             var obj = new ActionStatusDto
             {
                 Succeeded = true,

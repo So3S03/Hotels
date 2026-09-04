@@ -1,15 +1,18 @@
-﻿using Hotels.Application.RoomModule.DeleteFeature.Command;
+﻿using Hotels.Application.Abstraction.ServicesContracts;
+using Hotels.Application.RoomModule.DeleteFeature.Command;
 using Hotels.Application.Specifications.RoomSpecs;
 using Hotels.Domain.Contracts;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.RoomModule;
 using Hotels.Shared.Errors;
+using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotels.Application.RoomModule.DeleteFeature.Handler
 {
-    public class DeleteRoomHandler(IUnitOfWork _unitOfWork) : IRequestHandler<DeleteRoomCommand, ActionStatusDto>
+    public class DeleteRoomHandler(IUnitOfWork _unitOfWork, IRoomNotificationService _notifire, IMapper _mapper) : IRequestHandler<DeleteRoomCommand, ActionStatusDto>
     {
         public async Task<ActionStatusDto> Handle(DeleteRoomCommand request, CancellationToken cancellationToken)
         {
@@ -26,6 +29,8 @@ namespace Hotels.Application.RoomModule.DeleteFeature.Handler
             roomRepo.Delete(room);
             var result = await _unitOfWork.CompleteAsync() > 0;
             if(!result) throw new Exception("Something Went Wrong");
+            var mappedNot = _mapper.Map<RoomToReturnDto>(room);
+            await _notifire.NotifyRoomDeletion(mappedNot, request.ConnectionId);
             var Obj = new ActionStatusDto()
             {
                 Succeeded = true,

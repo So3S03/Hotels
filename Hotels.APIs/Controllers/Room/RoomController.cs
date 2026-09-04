@@ -18,22 +18,25 @@ namespace Hotels.APIs.Controllers.Room
     public class RoomController(IMediator _mediator) : BaseApiController
     {
         [HttpPost("AddRoom")]
-        public async Task<ActionResult<ActionStatusDto>> AddRoom(CreateRoomCommand command)
+        public async Task<ActionResult<ActionStatusDto>> AddRoom(CreateRoomCommand command, [FromHeader(Name = "SignalR-Connection-Id")] string? connectionId)
         {
+            command.ConnectionId = connectionId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpPut("UpdateRoom")]
-        public async Task<ActionResult<ActionStatusDto>> UpdateRoom(UpdateRoomCommand command)
+        public async Task<ActionResult<ActionStatusDto>> UpdateRoom(UpdateRoomCommand command, [FromHeader(Name = "SignalR-Connection-Id")] string? connectionId)
         {
+            command.ConnectionId = connectionId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpDelete("DeleteRoom")]
-        public async Task<ActionResult<ActionStatusDto>> DeleteRoom([FromQuery]DeleteRoomCommand command)
+        public async Task<ActionResult<ActionStatusDto>> DeleteRoom([FromQuery]DeleteRoomCommand command, [FromHeader(Name = "SignalR-Connection-Id")] string? connectionId)
         {
+            command.ConnectionId = connectionId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

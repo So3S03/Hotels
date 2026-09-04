@@ -1,8 +1,10 @@
-﻿using Hotels.Application.RoomModule.CreateFeature.Command;
+﻿using Hotels.Application.Abstraction.ServicesContracts;
+using Hotels.Application.RoomModule.CreateFeature.Command;
 using Hotels.Application.Specifications.RoomSpecs;
 using Hotels.Domain.Contracts;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.RoomModule;
 using Hotels.Shared.Errors;
 using MapsterMapper;
 using MediatR;
@@ -10,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hotels.Application.RoomModule.CreateFeature.Handler
 {
-    public class CreateRoomHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<CreateRoomCommand, ActionStatusDto>
+    public class CreateRoomHandler(IUnitOfWork _unitOfWork, IMapper _mapper, IRoomNotificationService _notifire) : IRequestHandler<CreateRoomCommand, ActionStatusDto>
     {
         public async Task<ActionStatusDto> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
         {
@@ -30,6 +32,8 @@ namespace Hotels.Application.RoomModule.CreateFeature.Handler
             await roomRepo.AddAsync(mappedRoom);
             var result = await _unitOfWork.CompleteAsync() > 0;
             if(!result) throw new Exception("Something Went Wrong");
+            var mappedNot = _mapper.Map<CreateRoomDto>(request);
+            await _notifire.NotifyRoomCreation( mappedNot, request.ConnectionId);
             var Obj = new ActionStatusDto()
             {
                 Succeeded = true,
