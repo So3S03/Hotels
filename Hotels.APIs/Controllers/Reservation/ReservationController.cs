@@ -18,14 +18,16 @@ namespace Hotels.APIs.Controllers.Reservation
     public class ReservationController(IMediator _mediator) : BaseApiController
     {
         [HttpPost("CreateReservation")]
-        public async Task<ActionResult<ActionStatusDto>> CreateReservation(CreateReservationCommand command)
+        public async Task<ActionResult<ActionStatusDto>> CreateReservation(CreateReservationCommand command, [FromHeader(Name = "SignalR-Connection-Id")] string? connectionId)
         {
+            command.ConnectionId = connectionId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
         [HttpPut("CancelReservation")]
-        public async Task<ActionResult<ActionStatusDto>> CancelReservation([FromQuery]CancelReservationCommand command)
+        public async Task<ActionResult<ActionStatusDto>> CancelReservation([FromQuery]CancelReservationCommand command, [FromHeader(Name = "SignalR-Connection-Id")] string? connectionId)
         {
+            command.ConnectionId = connectionId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

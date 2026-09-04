@@ -4,7 +4,7 @@ namespace Hotels.Application.Abstraction.ServicesContracts
 {
     public interface IReservationNotificationService
     {
-        Task NotifyReservationCreation(CreateReservationDto reservationDto);
-        Task NotifyReservationCancellation(ReservationToReturnDto reservationDto);
+        Task NotifyReservationCreation(CreateReservationDto reservationDto, string? excludeConnectionId);
+        Task NotifyReservationCancellation(ReservationToReturnDto reservationDto, string? excludeConnectionId);
     }
 }

@@ -4,8 +4,8 @@ namespace Hotels.Application.Abstraction.ServicesContracts
 {
     public interface IRoomNotificationService
     {
-        Task NotifyRoomCreation(CreateRoomDto room);
-        Task NotifyRoomModification(ModifyRoomDto room);
-        Task NotifyRoomDeletion(RoomToReturnDto room);
+        Task NotifyRoomCreation(CreateRoomDto room, string? excludeConnectionId);
+        Task NotifyRoomModification(ModifyRoomDto room, string? excludeConnectionId);
+        Task NotifyRoomDeletion(RoomToReturnDto room, string? excludeConnectionId);
     }
 }

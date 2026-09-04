@@ -1,10 +1,12 @@
-﻿using Hotels.Application.ReservationModule.CreateReservationFeature.Command;
+﻿using Hotels.Application.Abstraction.ServicesContracts;
+using Hotels.Application.ReservationModule.CreateReservationFeature.Command;
 using Hotels.Application.Specifications.ReservationSpecs;
 using Hotels.Application.Specifications.RoomSpecs;
 using Hotels.Domain.Contracts;
 using Hotels.Domain.Entities.Reservations;
 using Hotels.Domain.Entities.Room;
 using Hotels.Shared.Dtos._Common;
+using Hotels.Shared.Dtos.ReservationModule;
 using Hotels.Shared.Errors;
 using MapsterMapper;
 using MediatR;
@@ -12,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hotels.Application.ReservationModule.CreateReservationFeature.Handler
 {
-    public class CreateReservationHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<CreateReservationCommand, ActionStatusDto>
+    public class CreateReservationHandler(IUnitOfWork _unitOfWork, IReservationNotificationService _notifire, IMapper _mapper) : IRequestHandler<CreateReservationCommand, ActionStatusDto>
     {
         public async Task<ActionStatusDto> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
@@ -41,6 +43,8 @@ namespace Hotels.Application.ReservationModule.CreateReservationFeature.Handler
             await reservationRepo.AddAsync(mappedData);
             var result = await _unitOfWork.CompleteAsync() > 0;
             if (!result) throw new Exception("Something Went Wrong!");
+            var notMapp = _mapper.Map<CreateReservationDto>(request);
+            await _notifire.NotifyReservationCreation(notMapp, request.ConnectionId);
             var Obj = new ActionStatusDto()
             {
                 Succeeded = true,

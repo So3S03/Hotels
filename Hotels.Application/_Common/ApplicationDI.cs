@@ -1,4 +1,6 @@
 ﻿using Hotels.Application.Abstraction._Common.Contracts;
+using Hotels.Application.Abstraction.ServicesContracts;
+using Hotels.Application.Notifications;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +78,8 @@ namespace Hotels.Application._Common
             service.AddSingleton(globalSettings);
             service.AddScoped<IMapper, ServiceMapper>();
             service.AddSignalR();
+            service.AddScoped(typeof(IRoomNotificationService), typeof(RoomNotificationService));
+            service.AddScoped(typeof(IReservationNotificationService), typeof(ReservationNotificationService));
             return service;
         }
     }
