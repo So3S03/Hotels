@@ -20,7 +20,6 @@ export class MainLayout implements OnInit{
   //Common Vars
   isSideBarOpen: WritableSignal<boolean> = signal(true);
   moduleData: WritableSignal<IModule[]> = signal(moduleArray);
-  activeModule: WritableSignal<string> = signal(`${this.moduleData()[0].Title} Module`);
   icons = {
     LogOut,
     Menu
