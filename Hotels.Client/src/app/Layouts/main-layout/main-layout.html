@@ -1,0 +1,87 @@
+<div class="h-screen overflow-hidden flex">
+    <!-- sidebar -->
+    <aside
+        class="transition-all duration-300 ease-in-out overflow-hidden border-r border-slate-200 h-full flex flex-col"
+        [ngClass]="{
+        'w-65 opacity-100': isSideBarOpen(),
+        'w-0 opacity-0 pointer-events-none': !isSideBarOpen()
+    }">
+        <div class="p-6 border-b border-slate-200 flex items-center justify-between whitespace-nowrap">
+            <div class="flex items-center gap-2.5">
+                <div
+                    class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-xs">
+                    H
+                </div>
+                <span class="text-lg font-semibold tracking-tight text-slate-900">
+                    LuxeHotel
+                    <span class="text-xs font-normal text-slate-400">v1.0</span>
+                </span>
+            </div>
+        </div>
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto whitespace-nowrap">
+            @for (module of moduleData(); track $index) {
+            <a routerLinkActive="bg-indigo-50 text-indigo-700" [routerLink]="module.Navigator" (click)="activeModule.set(`${module.Title} Module`)"
+                class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-md text-sm transition-colors bg-indigo-50 font-medium">
+                <lucide-angular [name]="module.Icon" class="w-5 h-5"></lucide-angular>
+                <span>{{module.Title}}</span></a>
+            }
+        </nav>
+        <div class="p-6 border-t border-slate-200 flex items-center justify-between whitespace-nowrap">
+            <div class="flex items-center gap-3 p-2 rounded-lg">
+                <div
+                    class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-sm shrink-0">
+                    {{userData?.UserName[0]}}
+                </div>
+                <div class="flex-1 overflow-hidden min-w-0">
+                    <p class="text-sm font-semibold text-slate-800 truncate">
+                        {{userData?.UserName}}
+                    </p>
+                    <p class="text-xs text-slate-400 truncate">{{userData?.Email}}</p>
+                </div>
+                <button type="button" title="Sign Out" (click)="logOut()"
+                    class="text-slate-400 hover:text-red-600 p-1.5 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors">
+                    <lucide-icon [name]="icons.LogOut"></lucide-icon>
+                </button>
+            </div>
+        </div>
+    </aside>
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <nav
+            class="h-16 bg-white border-b border-slate-300 px-4 flex items-center justify-between sticky top-0 z-20 shrink-0">
+            <div class="flex items-center gap-3">
+                <button type="button" (click)="collapseSidebar()"
+                    class="p-2 rounded-lg text-slate-600 cursor-pointer hover:text-slate-900 hover:bg-slate-100 transition-colors flex items-center justify-center"
+                    title="Collapse sidebar">
+                    <lucide-angular [name]="icons.Menu" class="w-4 h-4"></lucide-angular>
+                </button>
+                <div class="flex items-center gap-2"><span
+                        class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5"><span
+                            class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Live</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="font-mono font-light opacity-50 text-xl">
+                    {{activeModule()}}
+                </div>
+                <div class="flex items-center gap-2.5 pl-3 border-l border-slate-200">
+                    <div
+                        class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                        {{userData?.UserName[0]}} </div>
+                    <div class="hidden sm:block text-left">
+                        <div class="text-xs font-semibold text-slate-800 leading-tight">
+                            {{userData?.UserName}} </div>
+                        <div class="text-[11px] text-slate-400 leading-tight">
+                            {{userData?.Email}} </div>
+                    </div>
+                    <button type="button" title="Sign Out" (click)="logOut()"
+                        class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors ml-1 cursor-pointer">
+                        <lucide-angular [name]="icons.LogOut" class="w-5 h-5"></lucide-angular>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="bg-slate-100 w-full h-full p-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

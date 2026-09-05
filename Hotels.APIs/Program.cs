@@ -21,7 +21,16 @@ namespace Hotels.APIs
             builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddCors(corsOpt =>
+            {
+                corsOpt.AddPolicy("Front-End-Policy", corsPolicyBuilder =>
+                {
+                    corsPolicyBuilder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
             var app = builder.Build();
             await app.InitApp<ApplicationDbContext>();
             // Configure the HTTP request pipeline.
@@ -32,7 +41,7 @@ namespace Hotels.APIs
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("Front-End-Policy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapHub<NotificationHub>("/hub/notifications");
