@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { env } from '../../Environment/environment.env';
 import { Observable } from 'rxjs';
+import { IJwtDecodedObject } from '../../Interfaces/_Common/IJwtDecodedObject';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AuthService {
   private readonly _HttpClient: HttpClient = inject(HttpClient);
   private readonly baseUrl : string = env.baseApiUrl;
   private readonly controllerName: string = "Account";
-  private readonly adminId = localStorage.getItem("AdminId") ?? "";
+  private readonly userData : IJwtDecodedObject = JSON.parse(localStorage.getItem("userData") ?? "");
+  private readonly adminId = this.userData.UserId;
 
   Login(credentials: any): Observable<any>
   {

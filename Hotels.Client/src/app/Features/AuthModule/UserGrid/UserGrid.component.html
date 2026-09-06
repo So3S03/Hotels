@@ -6,8 +6,8 @@
   </div>
   <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
     <div class="sm:col-span-2 lg:col-span-5">
-      <label for="filter-min-price" class="block text-xs font-medium text-slate-700 mb-1">Name</label>
-      <input id="filter-min-price" type="text" placeholder="Text"
+      <label for="filter-text-search" class="block text-xs font-medium text-slate-700 mb-1">Name</label>
+      <input id="filter-text-search" type="text" placeholder="Text" (input)="onSearch($event)" #search
         class="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 ng-untouched ng-pristine ng-valid">
     </div>
   </form>
@@ -33,6 +33,8 @@
         </tr>
       </thead>
       <tbody role="rowgroup">
+        @if(!isGridLoading())
+        {
         @for (item of data(); track $index) {
         <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/70 transition-colors text-sm text-center">
           <td class="p-4 whitespace-nowrap">
@@ -76,14 +78,14 @@
             <div class="inline-flex items-center gap-1">
               @if(item.isActive)
               {
-              <button type="button" title="DeActivate User"
+              <button type="button" title="DeActivate User" (click)="activateDeactivateUser(item.id, false)"
                 class="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer">
                 <lucide-angular [name]="icons.UserX" class="w-4 h-4"></lucide-angular>
               </button>
               }
               @else
               {
-              <button type="button" title="Activate User"
+              <button type="button" title="Activate User" (click)="activateDeactivateUser(item.id, true)"
                 class="p-1.5 text-emerald-500 hover:bg-emerald-50 rounded-lg transition-colors cursor-pointer">
                 <lucide-angular [name]="icons.UserCheck" class="w-4 h-4"></lucide-angular>
               </button>
@@ -99,12 +101,24 @@
           </td>
         </tr>
         }
+        }
+        @else
+        {
+        @for (item of iteratedPageSize; track $index) {
+        <tr>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+          <td class="p-4"><div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div></td>
+        </tr>
+        }
+        }
       </tbody>
     </table>
   </div>
   <app-Pagination [pageNum]="pageNum()" [pageSize]="pageSize()" [itemCount]="dataCount()"
-    /* (pageChange)="onPageChange($event)" 
-    (pageSizeChange)="onPageSizeChange($event)" */
-    >
+    (pageChange)="getGrid($event, pageSize())" (pageSizeChange)="getGrid(pageNum(), $event)">
   </app-Pagination>
 </div>
