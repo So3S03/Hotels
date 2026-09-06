@@ -1,0 +1,99 @@
+<div class="fixed top-0 bottom-0 left-0 right-0 bg-gray-800/40 backdrop-blur-xs z-20 flex justify-center items-center">
+  <div class="w-5/7 bg-white rounded-xl" animate.enter="popup-enter" animate.leave="popup-leave">
+    <header class="p-5 flex justify-between items-center border-b border-slate-200">
+      <h2>Room Logs</h2>
+      <button
+        class="p-2 rounded-full flex justify-center items-center hover:bg-gray-300 cursor-pointer transition-colors duration-100"
+        (click)="closeModal()">
+        <lucide-angular [name]="icons.X" class="w-5 h-5"></lucide-angular>
+      </button>
+    </header>
+    <main class="overflow-y-auto max-h-125 my-5 mx-5">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-xs mt-4 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table role="table" class="w-full border-collapse" id="pn_id_1-table" style="min-width: 50rem;">
+            <thead role="rowgroup" class="sticky top-0 z-10">
+              <tr class="bg-slate-50 text-slate-500 text-[11px] font-bold uppercase border-b border-slate-200">
+                <th class="p-4 whitespace-nowrap">Module Type</th>
+                <th class="p-4 whitespace-nowrap">Action Type</th>
+                <th class="p-4 whitespace-nowrap">User Name</th>
+                <th class="p-4 whitespace-nowrap">Action Date</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              @if(!isGridLoading())
+              {
+              @for (item of data(); track $index) {
+              <tr
+                class="border-b border-slate-100 last:border-0 hover:bg-slate-50/70 transition-colors text-sm text-center">
+                <td class="p-4 whitespace-nowrap">
+                  <span class="text-slate-800 font-medium">
+                    {{item.entityName}}
+                  </span>
+                </td>
+                <td class="p-4 whitespace-nowrap">
+                  <span class="text-slate-800 font-medium">
+                    {{item.actionTypeName}}
+                  </span>
+                </td>
+                <td class="p-4 whitespace-nowrap">
+                  <span class="text-slate-800 font-medium">
+                    {{item.userName}}
+                  </span>
+                </td>
+                <td class="p-4 whitespace-nowrap">
+                  <span class="text-slate-800 font-medium">
+                    {{item.actionDate | date: 'short'}}
+                  </span>
+                </td>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <td colspan="6" class="p-8 text-center text-slate-400 text-sm">
+                  No users found.
+                </td>
+              </tr>
+              }
+              }
+              @else
+              {
+              @for (item of iteratedPageSize; track $index) {
+              <tr>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+                <td class="p-4">
+                  <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+                </td>
+              </tr>
+              }
+              }
+            </tbody>
+          </table>
+        </div>
+        <app-Pagination [pageNum]="pageNum()" [pageSize]="pageSize()" [itemCount]="dataCount()"
+          (pageChange)="getGrid($event, pageSize())" (pageSizeChange)="getGrid(pageNum(), $event)">
+        </app-Pagination>
+      </div>
+    </main>
+    <footer class="p-5 flex justify-end items-center border-t border-slate-200 gap-3">
+      <button (click)="closeModal()"
+        class="cursor-pointer px-3.5 py-1.5 rounded-md border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors">
+        Close
+      </button>
+    </footer>
+  </div>
+</div>

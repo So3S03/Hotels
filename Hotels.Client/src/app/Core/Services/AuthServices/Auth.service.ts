@@ -11,8 +11,6 @@ export class AuthService {
   private readonly _HttpClient: HttpClient = inject(HttpClient);
   private readonly baseUrl : string = env.baseApiUrl;
   private readonly controllerName: string = "Account";
-  private readonly userData : IJwtDecodedObject = JSON.parse(localStorage.getItem("userData") ?? "");
-  private readonly adminId = this.userData.UserId;
 
   Login(credentials: any): Observable<any>
   {
@@ -35,9 +33,11 @@ export class AuthService {
 
   ActivateDeActivateUser(userId: string, activate: boolean): Observable<any>
   {
+  const userData : IJwtDecodedObject = JSON.parse(localStorage.getItem("userData") ?? "");
+  const adminId = userData.UserId;
     const data = {
       userId: userId,
-      adminId: this.adminId,
+      adminId: adminId,
       activate: activate
     }
     return this._HttpClient.put(`${this.baseUrl}/${this.controllerName}/ActivateDeactivateUser`, data)

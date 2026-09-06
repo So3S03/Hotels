@@ -11,7 +11,7 @@
         public int StatusId { get; set; }
 
         //Relations
-        public string RoomNumber { get; set; }
+        public int RoomNumber { get; set; }
         public required string RoomId { get; set; }
     }
 }

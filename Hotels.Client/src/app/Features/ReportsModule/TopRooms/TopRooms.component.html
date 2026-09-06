@@ -1,0 +1,93 @@
+<div
+  class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-4">
+  <div>
+    <h2 class="text-sm font-bold text-slate-900">Top Performing Rooms (R1)</h2>
+    <p class="text-xs text-slate-500">
+      Rooms with the highest volume of confirmed reservations
+    </p>
+  </div>
+  <form class="flex items-center gap-2" [formGroup]="searchForm">
+    <label for="take-count-select" class="text-xs font-semibold text-slate-600">
+      Results to show:
+    </label>
+    <select id="take-count-select" formControlName="type"
+      class="px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+      <option value="1">Single Rooms</option>
+      <option value="2">Double Rooms</option>
+      <option value="3">Suite Rooms</option>
+    </select>
+  </form>
+</div>
+<!-- Table section -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-xs mt-4 overflow-hidden">
+  <div class="overflow-x-auto">
+    <table role="table" class="w-full border-collapse" id="pn_id_1-table" style="min-width: 50rem;">
+      <thead role="rowgroup" class="sticky top-0 z-10">
+        <tr class="bg-slate-50 text-slate-500 text-[11px] font-bold uppercase border-b border-slate-200">
+          <th class="p-4 whitespace-nowrap">Room Number</th>
+          <th class="p-4 whitespace-nowrap">Room Type</th>
+          <th class="p-4 whitespace-nowrap">Reservation Count</th>
+          <th class="p-4 whitespace-nowrap">Total Revenue</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        @if(!isGridLoading())
+        {
+        @for (item of data(); track $index) {
+        <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/70 transition-colors text-sm text-center">
+          <td class="p-4 whitespace-nowrap">
+            <span class="text-slate-800 font-medium">
+              {{item.roomNumber}}
+            </span>
+          </td>
+          <td class="p-4 whitespace-nowrap">
+            <span class="text-slate-800 font-medium">
+              {{item.roomType}}
+            </span>
+          </td>
+          <td class="p-4 whitespace-nowrap">
+            <span class="text-green-500 font-medium rounded-full border border-green-500 bg-green-200">
+              {{item.reservationCount}} Reservations
+            </span>
+          </td>
+          <td class="p-4 whitespace-nowrap">
+            <span class="text-slate-800 font-medium">
+              {{item.totalRevenue}} $
+            </span>
+          </td>
+        </tr>
+        }
+        @empty {
+        <tr>
+          <td colspan="6" class="p-8 text-center text-slate-400 text-sm">
+            No users found.
+          </td>
+        </tr>
+        }
+        }
+        @else
+        {
+        @for (item of iteratedPageSize; track $index) {
+        <tr>
+          <td class="p-4">
+            <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+          </td>
+          <td class="p-4">
+            <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+          </td>
+          <td class="p-4">
+            <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+          </td>
+          <td class="p-4">
+            <div class="animate-pulse w-full h-3 rounded-xl bg-slate-200"></div>
+          </td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+  <app-Pagination [pageNum]="pageNum()" [pageSize]="pageSize()" [itemCount]="dataCount()"
+    (pageChange)="getGrid($event, pageSize())" (pageSizeChange)="getGrid(pageNum(), $event)">
+  </app-Pagination>
+</div>

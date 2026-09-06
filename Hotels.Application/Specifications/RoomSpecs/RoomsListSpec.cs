@@ -21,6 +21,7 @@ namespace Hotels.Application.Specifications.RoomSpecs
             {
                 Pagination(parameter.PageNum, parameter.PageSize);
             }
+            setOrderBy(R => R.PricePerNight, true);
         }
 
         private static Expression<Func<Room, bool>>? CreateAvailabiltyCriteria(bool? isAvailable)
@@ -37,7 +38,9 @@ namespace Hotels.Application.Specifications.RoomSpecs
 
         private static Expression<Func<Room, bool>>? CreatePriceRangeCriteria(decimal? startPrice, decimal? endPrice)
         {
-            if (startPrice is null || endPrice is null) return null;
+            if (startPrice is null && endPrice is null) return null;
+            if (startPrice is not null && endPrice is null) return R => R.PricePerNight >= startPrice;
+            if (startPrice is null && endPrice is not null) return R => R.PricePerNight <= endPrice;
             return R => R.PricePerNight >= startPrice && R.PricePerNight <= endPrice;
         }
     }

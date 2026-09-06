@@ -1,3 +1,25 @@
-<p>
-  Reports works!
-</p>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-3 px-3">
+  <div>
+    <h1 class="text-xl font-bold tracking-tight text-slate-900">
+      Analytics &amp; Reports
+    </h1>
+    <p class="text-xs text-slate-500 mt-0.5">
+      Comprehensive intelligence on room performance, revenue, and occupancy
+    </p>
+  </div>
+  <div class="flex items-center gap-1.5 p-1 rounded-lg border border-slate-200 text-xs font-semibold hover:text-slate-900 text-slate-600">
+    <button id="tab-btn-top-rooms" type="button" routerLink="/Reports/TopRooms" routerLinkActive="bg-white shadow-xs text-indigo-700 bg-slate-100"
+      class="px-3 py-1.5 rounded-md transition-all font-medium">
+      Top Rooms (R1)
+    </button>
+    <button id="tab-btn-revenue" type="button" routerLink="/Reports/Revenue" routerLinkActive="bg-white shadow-xs text-indigo-700  bg-slate-100"
+      class="px-3 py-1.5 rounded-md transition-all font-medium">
+      Revenue Report (R2)
+    </button>
+    <button id="tab-btn-occupancy" type="button" routerLink="/Reports/Occupancy" routerLinkActive="bg-white shadow-xs text-indigo-700  bg-slate-100"
+      class="px-3 py-1.5 rounded-md transition-all font-medium">
+      Occupancy Rates (R3)
+    </button>
+  </div>
+</div>
+<router-outlet></router-outlet>

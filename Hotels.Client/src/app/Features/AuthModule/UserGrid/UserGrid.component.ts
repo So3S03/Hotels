@@ -57,7 +57,6 @@ export class UserGridComponent implements OnInit, OnDestroy {
           this.isGridLoading.set(false);
           this.data.set(res.data);
           this.dataCount.set(res.total);
-          console.log(res);
         },
         error: (err: HttpErrorResponse) => {
           this.isGridLoading.set(false);

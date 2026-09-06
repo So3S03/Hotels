@@ -11,13 +11,15 @@ namespace Hotels.Application.Specifications.ReservationSpecs
         public ReservationListSpec(GetAllReservationsQuery query, bool isPagination = true) : base(
                 CritriaCreator.CreateCriteria<Reservation>(
                         GetDateRange(query.StartDate, query.EndDate)!,
-                        GetPriceRange(query.SatrtPriceRange, query.EndPriceRange)!,
-                        GetStatus(query.Status)!
+                        GetPriceRange(query.StartPriceRange, query.EndPriceRange)!,
+                        GetStatus(query.Status)!,
+                        GetGuestName(query.GuestName)!
                     )
             )
         {
             if ((query.PageNum > 0 || query.PageSize > 0) && isPagination) Pagination(query.PageNum, query.PageSize);
             addIncludes(r => r.Room);
+            setOrderBy(R => R.CheckInDate, false);
         }
 
         private static Expression<Func<Reservation, bool>>? GetDateRange(DateOnly? startDate, DateOnly? endDate)
@@ -40,6 +42,12 @@ namespace Hotels.Application.Specifications.ReservationSpecs
         {
             if(status is null) return null;
             return R => R.Status == status;
+        }
+
+        private static Expression<Func<Reservation, bool>>? GetGuestName(string? name)
+        {
+            if(string.IsNullOrEmpty(name)) return null;
+            return R => R.GuestName.ToLower().Contains(name.ToLower());
         }
     }
 }

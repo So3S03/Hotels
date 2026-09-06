@@ -18,7 +18,12 @@ export const routes: Routes = [
         path: "", component: MainLayout, children: [
             { path: "", redirectTo: "Rooms", pathMatch: "full" },
             { path: "Rooms", loadComponent: () => import("./Features/RoomModule/Rooms/Rooms.component").then(c => c.RoomsComponent)},
-            { path: "Reports", loadComponent: () => import("./Features/ReportsModule/Reports/Reports.component").then(c => c.ReportsComponent)},
+            { path: "Reports", loadComponent: () => import("./Features/ReportsModule/Reports/Reports.component").then(c => c.ReportsComponent), children: [
+                {path: "", redirectTo: "TopRooms", pathMatch: "full"},
+                {path: "TopRooms", loadComponent: () => import("./Features/ReportsModule/TopRooms/TopRooms.component").then(c => c.TopRoomsComponent)},
+                {path: "Revenue", loadComponent: () => import("./Features/ReportsModule/RevenueGrid/RevenueGrid.component").then(c => c.RevenueGridComponent)},
+                {path: "Occupancy", loadComponent: () => import("./Features/ReportsModule/OccupancyGrid/OccupancyGrid.component").then(c => c.OccupancyGridComponent)}
+            ]},
             { path: "Reservations", loadComponent: () => import("./Features/ReservationModule/Reservations/Reservations.component").then(c => c.ReservationsComponent)},
             { path: "Users", loadComponent: () => import("./Features/AuthModule/Users/Users.component").then(c => c.UsersComponent)}
         ],

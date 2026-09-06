@@ -6,10 +6,11 @@ namespace Hotels.Application.ReservationModule.GetAllReservationsFeature.Query
 {
     public class GetAllReservationsQuery : CommonGridQuery<ReservationToReturnDto>
     {
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
-        public decimal SatrtPriceRange { get; set; }
-        public decimal EndPriceRange { get; set; }
-        public ReservationStatus Status { get; set; }
+        public DateOnly? StartDate { get; set; }
+        public DateOnly? EndDate { get; set; }
+        public decimal? StartPriceRange { get; set; }
+        public decimal? EndPriceRange { get; set; }
+        public ReservationStatus? Status { get; set; }
+        public string? GuestName { get; set; }
     }
 }

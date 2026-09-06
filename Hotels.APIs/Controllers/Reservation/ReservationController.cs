@@ -5,6 +5,7 @@ using Hotels.Application.ReservationModule.CreateReservationFeature.Command;
 using Hotels.Application.ReservationModule.GetAllReservationsFeature.Query;
 using Hotels.Application.ReservationModule.GetReservationFeature.Query;
 using Hotels.Application.ReservationModule.GetReservationLogFeature.Handler;
+using Hotels.Application.ReservationModule.GetReservationLogFeature.Query;
 using Hotels.Shared.Dtos._Common;
 using Hotels.Shared.Dtos.LogsModule;
 using Hotels.Shared.Dtos.ReservationModule;
@@ -44,7 +45,7 @@ namespace Hotels.APIs.Controllers.Reservation
             return Ok(result);
         }
         [HttpGet("GetReservationsLog")]
-        public async Task<ActionResult<CommonGridQuery<LogToReturnDto>>> GetReservationsLog([FromQuery]GetReservationLogHandler query)
+        public async Task<ActionResult<CommonGridQuery<LogToReturnDto>>> GetReservationsLog([FromQuery]GetReservationLogQuery query)
         {
             var result = await _mediator.Send(query);
             return Ok(result);

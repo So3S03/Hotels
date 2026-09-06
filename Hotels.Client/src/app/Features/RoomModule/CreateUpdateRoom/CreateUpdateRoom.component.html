@@ -1,0 +1,71 @@
+<div class="fixed top-0 bottom-0 left-0 right-0 bg-gray-800/40 backdrop-blur-xs z-20 flex justify-center items-center">
+  <div class="w-1/2 bg-white rounded-xl" animate.enter="popup-enter" animate.leave="popup-leave">
+    <header class="p-5 flex justify-between items-center border-b border-slate-200">
+      <h2>{{title()}}</h2>
+      <button
+        class="p-2 rounded-full flex justify-center items-center hover:bg-gray-300 cursor-pointer transition-colors duration-100"
+        (click)="closeModal()">
+        <lucide-angular [name]="icons.X" class="w-5 h-5"></lucide-angular>
+      </button>
+    </header>
+    <main class="overflow-y-auto max-h-125 my-5 mx-5">
+      <form [formGroup]="form" class="space-y-4">
+        <div>
+          <label for="dlg-room-number" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            Room Number </label>
+          <input id="dlg-room-number" type="text" formControlName="roomNumber" placeholder="e.g. 104, 205, Penthouse"
+            class="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 ">
+          @if(form.get("roomNumber")?.errors && (form.get("roomNumber")?.touched || form.get("roomNumber")?.dirty))
+          {
+          @if(form.get("roomNumber")?.getError("required"))
+          {
+          <p class="text-xs text-red-600 mt-1">Valid room number is required</p>
+          }
+          }
+        </div>
+        <div>
+          <label for="dlg-room-type" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            Room Type </label>
+          <select id="dlg-room-type" formControlName="roomType"
+            class="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 ng-pristine ng-valid ng-touched">
+            <option value="1">Single</option>
+            <option value="2">Double</option>
+            <option value="3">Suite</option>
+          </select>
+          @if(form.get("roomType")?.errors && (form.get("roomType")?.touched || form.get("roomType")?.dirty))
+          {
+          @if(form.get("roomType")?.getError("required"))
+          {
+          <p class="text-xs text-red-600 mt-1">Valid room number is required</p>
+          }
+          }
+        </div>
+        <div>
+          <label for="dlg-room-price" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            Room Price ($)</label>
+          <input id="dlg-room-price" type="text" formControlName="pricePerNight" placeholder="e.g. 104, 205, Penthouse"
+            class="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 ">
+          @if(form.get("pricePerNight")?.errors && (form.get("pricePerNight")?.touched ||
+          form.get("pricePerNight")?.dirty))
+          {
+          @if(form.get("pricePerNight")?.getError("required"))
+          {
+          <p class="text-xs text-red-600 mt-1">Valid room number is required</p>
+          }
+          }
+        </div>
+      </form>
+    </main>
+    <footer class="p-5 flex justify-end items-center border-t border-slate-200 gap-3">
+      <button (click)="closeModal()"
+        class="cursor-pointer px-3.5 py-1.5 rounded-md border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors">
+        Close
+      </button>
+      <button [disabled]="isSubmit() || form.invalid" (click)="submit()"
+        class="cursor-pointer px-3.5 py-1.5 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors shadow-xs inline-flex gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+        Save
+        @if(isSubmit()) { <span class="animate-spin"> <lucide-angular [name]="icons.LoaderCircle"></lucide-angular> </span> }
+      </button>
+    </footer>
+  </div>
+</div>

@@ -12,6 +12,7 @@ namespace Hotels.Application.Specifications.RoomSpecs
             )
         {
             if ((query.PageNum > 0 || query.PageSize > 0) && isPagination) Pagination(query.PageNum > 0 ? query.PageNum : 1, query.PageSize > 0 ? query.PageSize : 1);
+            setOrderBy(R => R.ActionDate, false);
         }
     }
 }

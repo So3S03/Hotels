@@ -1,3 +1,21 @@
-<p>
-  Rooms works!
-</p>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-3 px-3">
+    <div>
+        <h1 class="text-xl font-bold tracking-tight text-slate-900">Rooms Inventory</h1>
+        <p class="text-xs text-slate-500 mt-0.5">Manage room types, nightly pricing, and real-time availability</p>
+    </div>
+    <button id="btn-add-room" type="button" (click)="activePopUp.set('Add')"
+        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-xs">
+        <lucide-angular [name]="icons.Plus" class="w-3.5 h-3.5"></lucide-angular>
+        <span>Add Room</span>
+    </button>
+</div>
+<app-RoomGrid (updateRoom)="openPopUp('Update', $event)" (roomLog)="openPopUp('Log', $event)" #Grid></app-RoomGrid>
+@if(activePopUp() == "Add" || activePopUp() == "Update")
+{
+    <app-CreateUpdateRoom [isAdd]="activePopUp() == 'Add' ? true : false" (close)="activePopUp.set('')" [roomId]="passedId()" (refreshGrid)="Grid.getGrid(1, 5)"></app-CreateUpdateRoom>
+}
+
+@if(activePopUp() == "Log")
+{
+    <app-RoomLog [roomId]="passedId()" (close)="activePopUp.set('')"></app-RoomLog>
+}

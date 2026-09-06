@@ -1,3 +1,12 @@
-<p>
-  Reservations works!
-</p>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-3 px-3">
+    <div>
+        <h1 class="text-xl font-bold tracking-tight text-slate-900">Reservations & Bookings</h1>
+        <p class="text-xs text-slate-500 mt-0.5">Manage guest bookings, night calculations, and cancellations</p>
+    </div>
+    <button id="btn-add-room" type="button"
+        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-xs">
+        <lucide-angular [name]="icons.Plus" class="w-3.5 h-3.5"></lucide-angular>
+        <span>Add Reservation</span>
+    </button>
+</div>
+<app-ReservationGrid></app-ReservationGrid>

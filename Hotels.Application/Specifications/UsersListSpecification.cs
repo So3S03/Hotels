@@ -6,7 +6,7 @@ namespace Hotels.Application.Specifications
 {
     internal class UsersListSpecification : BaseSpecification<AppUser>
     {
-        public UsersListSpecification(UsersQuery parameters): base(string.IsNullOrEmpty(parameters.Name) ? null : u => u.FullName.Contains(parameters.Name))
+        public UsersListSpecification(UsersQuery parameters): base(string.IsNullOrEmpty(parameters.Name) ? null : u => u.FullName.ToLower().Contains(parameters.Name.ToLower()))
         {
             if(parameters.PageNum > 0 && parameters.PageSize > 0)
             {

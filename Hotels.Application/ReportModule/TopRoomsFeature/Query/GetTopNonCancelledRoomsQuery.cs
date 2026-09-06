@@ -6,6 +6,6 @@ namespace Hotels.Application.ReportModule.TopRoomsFeature.Query
 {
     public class GetTopNonCancelledRoomsQuery : CommonGridQuery<TopNonCancelledRoomToReturnDto>
     {
-        public RoomType Type { get; set; }
+        public RoomType? Type { get; set; }
     }
 }
